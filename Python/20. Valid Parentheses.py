@@ -1,26 +1,25 @@
 class Solution:
-    def isValid(self, s: str) -> bool:
+    def isValid(self, string):
         stack = []
-        open = "([{"
-        close = ")]}"
+        open_form = {
+            "}": "{",
+            "]": "[",
+            ")": "("
+        }
 
-        if s[0] in close:
-            return False
+        for s in string:
+            if s in ")]}":
+                if len(stack) == 0 :
+                    return False
 
-        for i in s:
-            try:
-                if stack[0] in close:
+                if stack[-1] != open_form[s]:
                     return False
-            except IndexError:
-                if i in close:
-                    return False
-            if i in open:
-                stack.append(i)
-            else:
-                open_index = close.index(i)
-                open_value = open[open_index]
-                if stack[-1] != open_value:
-                    return False
-                else:
-                    del stack[-1]
-        return False if len(stack) > 0 else True
+                stack.pop(-1)
+                continue
+
+            stack.append(s)
+
+        return len(stack) == 0
+            
+
+print(Solution().isValid("]"))
