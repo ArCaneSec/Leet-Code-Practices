@@ -3,6 +3,18 @@ class ListNode:
         self.val = val
         self.next = next
 
+    def __iter__(self):
+        self._current = self
+        return self
+
+    def __next__(self):
+        if self._current is None:
+            raise StopIteration()
+        
+        val = self._current.val
+        self._current = self._current.next
+        return val
+
 class Solution:
     def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:
         first = ListNode()
@@ -23,12 +35,19 @@ class Solution:
         else:
             head.next = list2
         
-        return dummy.next
+        return first.next
     
 
 list1 = ListNode(0)
-list2 = ListNode(0)
-sort = Solution().mergeTwoLists(list1, list2)
-while sort is not None:
-    print(sort.val)
-    sort = sort.next
+current = list1
+for i in range(1, 6):
+    current.next = ListNode(i)
+    current = current.next
+
+for i in list1:
+    print(i)
+for i in list1:
+    print(i)
+# print(next(list1))
+# print(next(list1))
+# print(next(list1))
